@@ -1,4 +1,4 @@
-BsvPlupload = Backbone.Model.extend({  
+MediaCollectionPlupload = Backbone.Model.extend({  
     
     el: '.plupload',  
 
