@@ -3,8 +3,8 @@
          data-upload="{{ path('io_media_upload') }}" 
          data-prototype="{{ form_widget(form.vars['prototype'])|e }}" 
          data-picker="{{ form.vars['id'] }}_pickfiles"
-         data-field="{{ form.vars['field'] }}"
-    >{{ form_row(form) }}
+         data-field="{{ form.vars['media_field'] }}"
+    >{{ form_widget(form) }}
     </div>
     <div class="clearfix"></div>
     <div>

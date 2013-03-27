@@ -100,6 +100,24 @@ class Upload {
          $this->media->setPath($this->getPath());         
          return $this->media;
      }
+     
+     public function __toString() {
+         return $this->getId();
+     }
+     
+
+     public function getJsonArray() {
+         return array(
+             'id' => $this->getId(),
+             'path' => $this->getPath(),
+             'web' => $this->getWeb()
+         );
+     }
+     
+     public function getWeb() {
+         return "/media/uploads/".$this->getPath();
+     }        
+     
 }
 
 ?>

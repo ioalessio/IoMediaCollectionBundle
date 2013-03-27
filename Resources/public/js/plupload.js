@@ -38,13 +38,14 @@ MediaCollectionPlupload = Backbone.Model.extend({
             });
             uploader.bind('FileUploaded', function(up, file, info) {
 
-                console.log(info);
                 var data = $.parseJSON(info.response);
-                console.log(data);
                 var newForm = $(el).attr('data-prototype').replace(/__name__/g, file.id);    
                 $(el).append(newForm);
-    
-                $("#"+$(el).attr('id')+"_"+file.id+"_image_path").val(file.id);    
+
+                $("#"+$(el).attr('id')+"_"+file.id+"_image").val(data.result.id); 
+
+                
+                //$("#"+$(el).attr('id')+"_"+file.id+"_image_path").val(data.result.path);    
                 $("#"+$(el).attr('id')+"_"+file.id+"_"+$(el).attr('data-field')+"_media_src").attr('src', data.result.web);
 
                 $('#' + file.id ).remove();

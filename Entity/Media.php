@@ -44,6 +44,10 @@ class Media {
      public function getWeb() {
          return "/media/uploads/".$this->getPath();
      }        
+     
+     public function __toString() {
+         return $this->getId();
+     }
 }
 
 ?>
