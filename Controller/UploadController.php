@@ -13,7 +13,7 @@ use Io\MediaCollectionBundle\Entity\Media;
 class UploadController extends Controller
 {
     /**
-     * @Route("/upload.json", name="media_upload")
+     * @Route("/upload.json", name="io_media_upload")
      */
     public function indexAction()
     {

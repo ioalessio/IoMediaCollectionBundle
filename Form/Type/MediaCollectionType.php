@@ -17,15 +17,29 @@ class MediaCollectionType extends CollectionType
     /**
      * {@inheritdoc}
      */
-    /*public function buildForm(FormBuilderInterface $builder, array $options)
-    {        
-        parent::buildForm($builder, $options);
-    }*/
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        if ($options['allow_add'] && $options['prototype']) {
+            $prototype = $builder->create($options['prototype_name'], $options['type'], array_replace(array(
+                'label' => $options['prototype_name'] . 'label__',
+            ), $options['options']));
+            $builder->setAttribute('prototype', $prototype->getForm());
+        }
+
+        $resizeListener = new ResizeFormListener(
+            $options['type'],
+            $options['options'],
+            $options['allow_add'],
+            $options['allow_delete']
+        );
+
+        $builder->addEventSubscriber($resizeListener);
+    }
 
     /**
      * {@inheritdoc}
      */
-    /*public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars = array_replace($view->vars, array(
             'allow_add'    => $options['allow_add'],
@@ -35,7 +49,43 @@ class MediaCollectionType extends CollectionType
         if ($form->getConfig()->hasAttribute('prototype')) {
             $view->vars['prototype'] = $form->getConfig()->getAttribute('prototype')->createView($view);
         }
-    }*/    
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function finishView(FormView $view, FormInterface $form, array $options)
+    {
+        if ($form->getConfig()->hasAttribute('prototype') && $view->vars['prototype']->vars['multipart']) {
+            $view->vars['multipart'] = true;
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $optionsNormalizer = function (Options $options, $value) {
+            $value['block_name'] = 'entry';
+
+            return $value;
+        };
+
+        $resolver->setDefaults(array(
+            'media_field' => 'image', 
+            'allow_add'      => true,
+            'allow_delete'   => false,
+            'prototype'      => true,
+            'prototype_name' => '__name__',
+            'type'           => 'text',
+            'options'        => array(),
+        ));
+
+        $resolver->setNormalizers(array(
+            'options' => $optionsNormalizer,
+        ));
+    }
 
     /**
      * {@inheritdoc}
@@ -43,18 +93,5 @@ class MediaCollectionType extends CollectionType
     public function getName()
     {
         return 'media_collection';
-    }
-    
-    /**
-     * Override some default options
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        
-        $resolver->setDefaults(array(
-            'prototype' => true,
-            'media_field' => 'image'
-        ));
-    }    
+    }   
 }

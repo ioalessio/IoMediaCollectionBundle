@@ -1,5 +1,5 @@
 <div>
-    <div class="plupload" id="{{ form.vars['id'] }}" data-upload="{{ path('media_upload') }}" data-prototype="{{ form_widget(form.vars['prototype'])|e }}" class="well" data-picker="{{ form.vars['id'] }}_pickfiles">
+    <div class="plupload" id="{{ form.vars['id'] }}" data-upload="{{ path('io_media_upload') }}" data-prototype="{{ form_widget(form.vars['prototype'])|e }}" class="well" data-picker="{{ form.vars['id'] }}_pickfiles">
         {{ form_widget(form) }}        
         {{ form_rest(form) }}
     </div>
