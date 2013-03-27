@@ -1,0 +1,21 @@
+{
+	"name": "ioalessio/mediacollectionbundle",
+	"type": "symfony-bundle",
+	"description": "Widget for upload multiple files using plupload",
+	"keywords": [ "ajax upload", "upload file widget", "plupload", "Symfony2" ],
+	"license": "LGPL",
+	"authors": [
+		{
+			"name": "Alessio",
+			"email": "io.alessio@gmail.com"
+		}
+	],
+	"require": {
+		"php": ">=5.3.0",
+		"symfony/framework-bundle": ">=2.1,<2.3-dev"
+	},
+	"autoload": {
+		"psr-0": { "Io\\MediaCollectionBundle": "" }
+	},
+	"target-dir": "Io/MediaCollectionBundle"
+}

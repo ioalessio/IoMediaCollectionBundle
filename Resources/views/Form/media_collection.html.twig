@@ -1,0 +1,12 @@
+<div>
+    <div class="plupload" id="{{ form.vars['id'] }}" data-upload="{{ path('media_upload') }}" data-prototype="{{ form_widget(form.vars['prototype'])|e }}" class="well" data-picker="{{ form.vars['id'] }}_pickfiles">
+        {{ form_widget(form) }}        
+        {{ form_rest(form) }}
+    </div>
+  
+    <ul id="{{ form.vars['id'] }}_uploader_list" class="uploader_list nav nav-list"></ul>
+    <div>
+        <button id="{{ form.vars['id'] }}_pickfiles" class="btn btn-primary" type="button">Select files</button> 
+        <button id="{{ form.vars['id'] }}_uploadfiles" class="btn btn-primary" type="button">Upload files</button> 
+    </div>
+</div>
