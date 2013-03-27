@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\Filesystem\Exception\IOException;
 use Io\MediaCollectionBundle\Entity\Media;
+use Io\MediaCollectionBundle\Entity\Upload;
 
 class UploadController extends Controller
 {
@@ -40,14 +41,26 @@ class UploadController extends Controller
             $targetDir = $this->container->getParameter('kernel.root_dir')."/../web/media/uploads";        
             
             $file = $this->getRequest()->files->get('file');
-            $media = new Media();
-            $media->setPath(preg_replace('/[^\w\._]+/', '_', $file->getClientOriginalName()));
-            $media->upload($file, $targetDir);
-           
-            $out = array('jsonrpc' => "2.0", "id" => "id", "result" => $media->getJsonArray() );
-            $response = new Response(json_encode($out));
-            $response->headers->set('Content-type', 'application/json');
-            return $response;
+            $upload = new Upload();
+            $upload->setId($this->getRequest()->get('fileid'));
+            $upload->setPath(preg_replace('/[^\w\._]+/', '_', $file->getClientOriginalName()));
+            $upload->upload($file, $targetDir);
+            
+            $validator = $this->get('validator');
+            if( $validator->validate($upload))
+            {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($upload);
+                $em->flush();
+                
+                $media = $upload->getMedia();
+                $out = array('jsonrpc' => "2.0", "id" => "id", "result" => $media->getJsonArray() );
+                $response = new Response(json_encode($out));
+                $response->headers->set('Content-type', 'application/json');
+                return $response;
+            }
+            else
+                throw new IOException('{"jsonrpc" : "2.0", "error" : {"code": 103, "message": "Failed to save file data in your database."}, "id" : "id"}');
 
         } catch (IOException $e) {
             throw new IOException('{"jsonrpc" : "2.0", "error" : {"code": 103, "message": "Failed to move uploaded file."}, "id" : "id"}');

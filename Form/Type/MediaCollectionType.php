@@ -34,7 +34,7 @@ class MediaCollectionType extends CollectionType
         );
 
         $builder->addEventSubscriber($resizeListener);
-    }
+            }
 
     /**
      * {@inheritdoc}
@@ -44,6 +44,7 @@ class MediaCollectionType extends CollectionType
         $view->vars = array_replace($view->vars, array(
             'allow_add'    => $options['allow_add'],
             'allow_delete' => $options['allow_delete'],
+            'field'        => $options['field'],
         ));
 
         if ($form->getConfig()->hasAttribute('prototype')) {
@@ -66,6 +67,8 @@ class MediaCollectionType extends CollectionType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        $resolver->setOptional(array('field'));
+        
         $optionsNormalizer = function (Options $options, $value) {
             $value['block_name'] = 'entry';
 
@@ -92,6 +95,6 @@ class MediaCollectionType extends CollectionType
      */
     public function getName()
     {
-        return 'media_collection';
+        return 'io_media_collection';
     }   
 }

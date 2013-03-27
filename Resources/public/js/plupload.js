@@ -29,8 +29,11 @@ MediaCollectionPlupload = Backbone.Model.extend({
                     }
                 });
                 
+            uploader.bind('BeforeUpload', function(up, file) {
+                up.settings.multipart_params = {"fileid": file.id };
+            });                
             uploader.bind('Error', function(up, err) {
-               $('#filelist').append("<li>Error: " + err.code + ", Message: " + err.message + (err.file ? ", File: " + err.file.name : "") +"</li>");
+               $("#"+$(el).attr('id')+'_uploader_list').append("<li>Error: " + err.code + ", Message: " + err.message + (err.file ? ", File: " + err.file.name : "") +"</li>");
                up.refresh(); // Reposition Flash/Silverlight
             });
             uploader.bind('FileUploaded', function(up, file, info) {
@@ -41,8 +44,8 @@ MediaCollectionPlupload = Backbone.Model.extend({
                 var newForm = $(el).attr('data-prototype').replace(/__name__/g, file.id);    
                 $(el).append(newForm);
     
-                $("#"+$(el).attr('id')+"_"+file.id+"_image").val(file.id);    
-                $("#"+$(el).attr('id')+"_"+file.id+"_image").parent().append('<img src="'+data.result.web+'" />');    
+                $("#"+$(el).attr('id')+"_"+file.id+"_image_path").val(file.id);    
+                $("#"+$(el).attr('id')+"_"+file.id+"_"+$(el).attr('data-field')+"_media_src").attr('src', data.result.web);
 
                 $('#' + file.id ).remove();
             });

@@ -12,7 +12,7 @@ class MediaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('image', 'text');
+        $builder->add('path', 'text');
         
     }
 
@@ -25,6 +25,6 @@ class MediaType extends AbstractType
 
     public function getName()
     {
-        return 'media';
+        return 'io_media';
     }
 }

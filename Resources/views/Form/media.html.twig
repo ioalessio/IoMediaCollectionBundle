@@ -1,0 +1,9 @@
+    <div class="media_widget" id="{{ form.vars['id'] }}">
+        <div class="media_image">
+            <img src="" id="{{ form.vars['id'] }}_media_src" class="img-polaroid media_image_src" />
+        </div>
+        <div class="caption">
+            {{ form_row(form.path) }}
+            {{ form_rest(form) }}
+        </div>
+    </div>
