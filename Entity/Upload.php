@@ -32,13 +32,11 @@ class Upload {
     protected $path;
 
     /**
-     * @Assert\NotBlank()
      * @Assert\DateTime
      */
     protected $createdAt;
     
     /**
-     * @Assert\NotBlank()
      * @Assert\DateTime
      */
      protected $updatedAt;

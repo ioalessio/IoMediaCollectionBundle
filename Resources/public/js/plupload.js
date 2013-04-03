@@ -39,7 +39,7 @@ MediaCollectionPlupload = Backbone.Model.extend({
             uploader.bind('FileUploaded', function(up, file, info) {
 
                 var data = $.parseJSON(info.response);
-                var newForm = $(el).attr('data-prototype').replace(/__name__/g, file.id);    
+                var newForm = $(el).attr('data-prototype').replace(/__image__/g, file.id);    
                 $(el).append(newForm);
 
                 $("#"+$(el).attr('id')+"_"+file.id+"_image").val(data.result.id); 

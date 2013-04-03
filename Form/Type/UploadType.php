@@ -44,7 +44,7 @@ class UploadType extends AbstractType
 
     public function getParent()
     {
-        return 'text';
+        return 'hidden';
     }
 
     

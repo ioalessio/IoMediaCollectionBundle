@@ -12,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
-class MediaCollectionType extends CollectionType
+class MediaCollectionType extends AbstractType
 {    
     /**
      * {@inheritdoc}
@@ -34,7 +34,7 @@ class MediaCollectionType extends CollectionType
         );
 
         $builder->addEventSubscriber($resizeListener);
-            }
+    }
 
     /**
      * {@inheritdoc}
@@ -52,7 +52,7 @@ class MediaCollectionType extends CollectionType
         }
     }
 
-    /**
+ /**
      * {@inheritdoc}
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
@@ -68,7 +68,6 @@ class MediaCollectionType extends CollectionType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setOptional(array('media_field'));
-        
         $optionsNormalizer = function (Options $options, $value) {
             $value['block_name'] = 'entry';
 
@@ -80,7 +79,8 @@ class MediaCollectionType extends CollectionType
             'allow_add'      => true,
             'allow_delete'   => false,
             'prototype'      => true,
-            'prototype_name' => '__name__',
+            'prototype_name' => '__image__',
+            'by_reference' => false,
             'type'           => 'text',
             'options'        => array(),
         ));
