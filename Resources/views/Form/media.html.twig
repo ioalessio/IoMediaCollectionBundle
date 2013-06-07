@@ -1,8 +1,3 @@
-    <div class="media_widget" id="{{ form.vars['id'] }}_div">
-        <div class="media_image">
-            <img src="{{ form.vars['value'] ? path('io_media_show_upload', { 'id': form.vars['value'] }) : "" }}" id="{{ form.vars['id'] }}_media_src" class="img-polaroid media_image_src" />
-        </div>
-        <div class="caption">
-            {{ form_widget(form) }}
-        </div>
-    </div>
+
+
+{{ form_widget(form) }}

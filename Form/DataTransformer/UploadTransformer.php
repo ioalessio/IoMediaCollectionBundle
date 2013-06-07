@@ -25,16 +25,16 @@ class UploadTransformer implements DataTransformerInterface
     /**
      * Transforms an object (issue) to a string (number).
      *
-     * @param  Issue|null $issue
+     * @param  Upload|null $issue
      * @return string
      */
     public function transform($upload)
     {
         if (null === $upload) {
-            return "";
+            return null;
         }
-
-        return $upload->getId();
+        
+        return $upload; //->getId();
     }
 
     /**
@@ -42,7 +42,7 @@ class UploadTransformer implements DataTransformerInterface
      *
      * @param  string $number
      *
-     * @return Issue|null
+     * @return Upload|null
      *
      * @throws TransformationFailedException if object (issue) is not found.
      */
@@ -51,6 +51,8 @@ class UploadTransformer implements DataTransformerInterface
         if (!$id) {
             return null;
         }
+        
+
 
         $upload = $this->om
             ->getRepository('IoMediaCollectionBundle:Upload')

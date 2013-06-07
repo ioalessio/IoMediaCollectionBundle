@@ -43,8 +43,10 @@ class UploadController extends Controller
             $file = $this->getRequest()->files->get('file');
             $upload = new Upload();
             $upload->setId($this->getRequest()->get('fileid'));
-            $upload->setPath(preg_replace('/[^\w\._]+/', '_', $file->getClientOriginalName()));
-            $upload->upload($file, $targetDir);
+ 
+            $upload->setPath($upload->getId().'.'.$file->guessExtension());
+            //$upload->setPath(preg_replace('/[^\w\._]+/', '_', $file->getClientOriginalName()));
+            
             
             $validator = $this->get('validator');
             if( $validator->validate($upload))
@@ -53,8 +55,21 @@ class UploadController extends Controller
                 $em->persist($upload);
                 $em->flush();
                 
-                $media = $upload->getMedia();
-                $out = array('jsonrpc' => "2.0", "id" => "id", "result" => $media->getJsonArray() );
+                $upload->upload($file, $targetDir);
+                
+                
+                $cachePathResolver = $this->get('imagine.cache.path.resolver');
+                $path = $upload->getWeb();
+                $cachedImage = $cachePathResolver->getBrowserPath($path, 'small');
+        
+                $result = array(
+                    'id' => $upload->getId(),
+                    'path' => $upload->getPath(),
+                    'image' => $cachedImage
+                    //'image' => $this->generateUrl('io_media_show_upload', array('id' => $upload->getId(), 'format' => 'small'))
+                    );
+                
+                $out = array('jsonrpc' => "2.0", "id" => "id", "result" => $result );
                 $response = new Response(json_encode($out));
                 $response->headers->set('Content-type', 'application/json');
                 return $response;

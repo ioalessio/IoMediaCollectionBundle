@@ -11,8 +11,6 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-use Io\MediaCollectionBundle\Entity\Media;
-
 /**
  * @ORM\Entity()
  * @ORM\Table(name="media_uploads")
@@ -28,6 +26,7 @@ class Upload {
     
     /**
      * @ORM\Column(name="path", type="string")
+     * @Assert\NotBlank
      */
     protected $path;
 
@@ -41,10 +40,6 @@ class Upload {
      */
      protected $updatedAt;
 
-     /**
-      *
-      */
-     protected $media;
     
      function __construct() {
          $this->updatedAt = new DateTime;
@@ -89,16 +84,11 @@ class Upload {
         // Create target dir
         if (!$fs->exists($path))
                 $fs->mkdir($path);
+        
         return $file->move($path, $this->getPath());
      }
      
-     public function getMedia() {
-         $this->media = new Media;
-         $this->media->setId($this->getId());
-         $this->media->setPath($this->getPath());         
-         return $this->media;
-     }
-     
+    
      public function __toString() {
          return $this->getId();
      }

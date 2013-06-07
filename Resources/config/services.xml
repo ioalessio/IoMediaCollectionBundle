@@ -9,11 +9,16 @@
         <tag name="form.type" alias="io_media_collection" />
         </service>
         
-        <service id="io_mediacollection.form.type.io_media" class="Io\MediaCollectionBundle\Form\Type\UploadType">
-        <argument type="service" id="doctrine.orm.entity_manager"/>
+        <service id="io_mediacollection.form.type.io_media" class="Io\MediaCollectionBundle\Form\Type\MediaType">
         <tag name="form.type" alias="io_media" />
         </service>
-                  
+
+        <service id="io_mediacollection.form.type.io_upload" class="Io\MediaCollectionBundle\Form\Type\UploadType">
+        <argument type="service" id="doctrine.orm.entity_manager"/>
+        <argument type="service" id="router"/>
+        <tag name="form.type" alias="io_media_upload" />
+        </service>                  
+                                                      
     </services>
     
 </container>
