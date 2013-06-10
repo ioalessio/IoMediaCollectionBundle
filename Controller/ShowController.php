@@ -16,9 +16,8 @@ class ShowController extends Controller
     /**
      * @Route("/show/{id}/{format}", name="io_media_show_upload")
      * @Cache(expires="tomorrow")
-     *  
      */
-    public function showAction($id, $format = "small")
+    public function showAction($id, $format = "tumb")
     {       
         $em = $this->getDoctrine()->getManager();
         $upload = $em->createQuery("SELECT u FROM IoMediaCollectionBundle:Upload u WHERE u.id = :id")

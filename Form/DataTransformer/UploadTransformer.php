@@ -31,10 +31,10 @@ class UploadTransformer implements DataTransformerInterface
     public function transform($upload)
     {
         if (null === $upload) {
-            return null;
-        }
-        
-        return $upload; //->getId();
+            return "";
+         }
+                
+        return $upload->getId();
     }
 
     /**
@@ -52,8 +52,6 @@ class UploadTransformer implements DataTransformerInterface
             return null;
         }
         
-
-
         $upload = $this->om
             ->getRepository('IoMediaCollectionBundle:Upload')
             ->findOneBy(array('id' => $id))

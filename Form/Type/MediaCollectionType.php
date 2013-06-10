@@ -12,6 +12,9 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
+/**
+ * @deprecated since version number
+ */
 class MediaCollectionType extends AbstractType
 {    
     /**

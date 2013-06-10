@@ -1,0 +1,26 @@
+services:
+#  io_mediacollection.form.type.media_collection:
+#    class: Io\MediaCollectionBundle\Form\Type\MediaCollectionType
+#    tags:
+#      - { name: form.type, alias: io_media_collection }
+      
+  io_mediacollection.form.type.media:
+    class: Io\MediaCollectionBundle\Form\Type\MediaType
+    arguments: ["@doctrine.orm.entity_manager", "@router"]
+    tags:
+      - { name: form.type, alias: io_media }     
+        
+  io_mediacollection.form.type.upload:
+    class: Io\MediaCollectionBundle\Form\Type\UploadType
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: form.type, alias: io_upload }
+
+  io_mediacollection.form.type.media_upload:
+    class: Io\MediaCollectionBundle\Form\Type\MediaUploadType
+    arguments: ["@doctrine.orm.entity_manager", "@router"]
+    tags:
+      - { name: form.type, alias: io_media_upload }     
+
+                               
+    

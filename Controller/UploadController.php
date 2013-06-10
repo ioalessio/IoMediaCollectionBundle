@@ -42,9 +42,9 @@ class UploadController extends Controller
             
             $file = $this->getRequest()->files->get('file');
             $upload = new Upload();
-            $upload->setId($this->getRequest()->get('fileid'));
+            $upload->setFile($this->getRequest()->get('fileid'));
  
-            $upload->setPath($upload->getId().'.'.$file->guessExtension());
+            $upload->setPath($upload->getFile().'.'.$file->guessExtension());
             //$upload->setPath(preg_replace('/[^\w\._]+/', '_', $file->getClientOriginalName()));
             
             
@@ -60,10 +60,11 @@ class UploadController extends Controller
                 
                 $cachePathResolver = $this->get('imagine.cache.path.resolver');
                 $path = $upload->getWeb();
-                $cachedImage = $cachePathResolver->getBrowserPath($path, 'small');
+                $cachedImage = $cachePathResolver->getBrowserPath($path, 'tumb');
         
                 $result = array(
-                    'id' => $upload->getId(),
+                    'id'  => $upload->getId(),
+                    'file' => $upload->getFile(),
                     'path' => $upload->getPath(),
                     'image' => $cachedImage
                     //'image' => $this->generateUrl('io_media_show_upload', array('id' => $upload->getId(), 'format' => 'small'))

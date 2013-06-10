@@ -1,3 +1,20 @@
+<div id="{{ form.vars['id'] }}" {% for attrname,attrvalue in form.vars['attr'] %}{{attrname}}="{{attrvalue|trans}}" {% endfor %}>
 
+    <div class="thumbnail span4">
+        <img src="{{ form.upload.vars['value'] != "" ? path('io_media_show_upload', { 'id': form.upload.vars['value'] }) : "" }}" id="{{ form.vars['id'] }}_image" />
 
-{{ form_widget(form) }}
+        <div class="btn-toolbar pagination-centered">
+            <button id="{{ form.vars['id'] }}_browse" class="btn btn-small" type="button"><i class="icon-upload"></i> upload </button> 
+            {#<button id="{{ id }}_upload" class="btn btn-mini" type="button"><i class="icon-upload"></i></button> #}        
+            <button id="{{ form.vars['id'] }}_remove" class="btn btn-small" type="button"><i class="icon-remove"></i> remove </button>
+        </div>
+        
+        <div id="{{ form.vars['id'] }}_notify"></div>
+        <div id="{{ form.vars['id'] }}_plupload"></div>   
+            
+    </div>
+
+    {{ form_rest(form) }}            
+        
+</div>
+

@@ -1,0 +1,33 @@
+<div 
+    id="{{ form.vars['id'] }}" {% for attrname,attrvalue in form.vars['attr'] %}{{attrname}}="{{attrvalue|trans}}" {% endfor %}        
+        data-prototype="{{ form_widget(form.vars.embedtype)|e }}"
+    >
+
+    <div id="{{ form.vars['id'] }}_embed">
+        {% if form.embed is defined %}
+            {{ form_row(form.embed, { 'label_render': false, 'widget_control_group': false } ) }}    
+        {% endif %}        
+    </div>
+    
+    <div class="media_image">
+        <img style="background: green; height: 100px; width: 100px;" src="{{ form.embed is defined and form.embed.upload.vars['value'] != "" ? path('io_media_show_upload', { 'id': form.embed.upload.vars['value'] }) : "" }}" id="{{ form.vars['id'] }}_image" />
+
+        
+        <div class="btn-toolbar">
+                <button id="{{ form.vars['id'] }}_browse" class="btn btn-small" type="button"><i class="icon-upload"></i> upload </button> 
+                {#<button id="{{ id }}_upload" class="btn btn-mini" type="button"><i class="icon-upload"></i></button> #}        
+                <button id="{{ form.vars['id'] }}_remove" class="btn btn-small" type="button"><i class="icon-remove"></i> remove </button>
+        </div>
+                
+        {#<ul id="{{ form.embed.upload.vars['id'] }}_upload_list" class="uploader_list nav nav-list"></ul>#}
+        
+        <div id="{{ form.vars['id'] }}_notify"></div>
+        <div id="{{ form.vars['id'] }}_plupload"></div>   
+        
+    </div>
+
+    <div class="">
+        {{ form_rest(form) }}            
+    </div>
+    
+</div>

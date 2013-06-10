@@ -19,31 +19,24 @@ class Upload {
     
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="string")
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */    
     protected $id;
     
     /**
+     * @ORM\Column(name="file", type="string", unique=true)
+     */    
+    protected $file;
+    
+    /**
      * @ORM\Column(name="path", type="string")
-     * @Assert\NotBlank
      */
     protected $path;
 
-    /**
-     * @Assert\DateTime
-     */
-    protected $createdAt;
-    
-    /**
-     * @Assert\DateTime
-     */
-     protected $updatedAt;
 
     
      function __construct() {
-         $this->updatedAt = new DateTime;
-         $this->createdAt = new DateTime;
      }
 
      public function getId() {
@@ -62,23 +55,16 @@ class Upload {
          $this->path = $path;
      }
 
-     public function getCreatedAt() {
-         return $this->createdAt;
+     
+     public function getFile() {
+         return $this->file;
      }
 
-     public function setCreatedAt($createdAt) {
-         $this->createdAt = $createdAt;
+     public function setFile($file) {
+         $this->file = $file;
      }
 
-     public function getUpdatedAt() {
-         return $this->updatedAt;
-     }
-
-     public function setUpdatedAt($updatedAt) {
-         $this->updatedAt = $updatedAt;
-     }
-
-     public function upload(UploadedFile $file, $path = "") {
+    public function upload(UploadedFile $file, $path = "") {
        
         $fs = new Filesystem; 
         // Create target dir
@@ -90,13 +76,15 @@ class Upload {
      
     
      public function __toString() {
-         return $this->getId();
+         return (string)$this->getFile();
      }
      
 
      public function getJsonArray() {
          return array(
              'id' => $this->getId(),
+             'file' => $this->getFile(),
+             
              'path' => $this->getPath(),
              'web' => $this->getWeb()
          );
